@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>{{ blog.title }}</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/css/blog_detail.css' %}" />
+        <link href="{% static 'blog/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <script src="{% static 'blog/jquery/jquery-3.0.0.min.js' %}"></script>
+        <script type="text/javascript" src ="{% static 'blog/js/get_detail.js' %}"></script>
+</head>
+
+<body>
+        <div class="top">
+                <img src="{% static 'blog/img/top_img_md.jpg' %}" class="img-responsive" alt="My Blog">
+                <div class="navigator  float_rt">                       
+                            <span class="nav_item">博客主页</span >
+                            <span  class="nav_item">目录视图</span >
+                            <span class="nav_item">摘要视图</span >
+                </div>
+        </div>
+        <div class="content">
+                
+                <!-- blog content -->
+                <div class="left_panel float_lt">
+                    
+                        <!-- <div class="header">
+                          <span><a href="{% url 'blog_get_blogs' %}">博客</a> - <a href="{% url 'blog_get_detail' blog.id %}">{{ blog.title }}</a></span>
+                        </div> -->
+ 
+                        <div class="blog_info">
+                                <small><span class="blog_created" >{{ blog.created|date:"Y-m-d H:i" }}</span></small>
+                                <small><span class="dc_sep">/</span></small>
+                                <small ><span class="blog_category" >{{ blog.category.name }}</span></small>
+                        </div>
+                
+                        <div class="title">
+                                <a href="{% url 'blog_get_detail' blog.id %}"><h2>{{ blog.title }}</h2></a>
+                        </div>
+                
+                        <div class="blog_content">
+                                {{ blog.content }}
+                        </div>
+             
+                        <div class="comments"">
+                                <div class="comment_header"><h3>查看评论</h3></div>
+                                {% for comment in comments %}
+                                <p class="comment_item" ">{{comment.name}} says : {{comment.content}}</p>
+                                {% endfor %}
+                        </div>
+
+                        <!-- submit comment -->
+                        <div class="comment_submit">
+                                <h3 class="comment_post_header">提交评论</h3>
+                              <!--   <form action=" {% url 'blog_get_detail' blog.id %}" method ="post" class="comment_form" >
+                                        {% csrf_token %}
+                                        <div class="comment_item">
+                                                <img src="{%static 'blog/img/person.png'%}" alt="姓名" class="person" >
+                                                <input type="text" name="name" placeholder="姓 名">
+                                        </div>
+                                        <div class="comment_item">
+                                                <img src="{%static 'blog/img/at.png'%}" alt="邮箱" class="email" >
+                                                <input type="text" name="email" placeholder="邮 箱">
+                                        </div>
+                                        <div class="comment_item">
+                                                <img src="{%static 'blog/img/pencil.png'%}" alt="评论内容" class="comment_txt" >
+                                                <input type="text" name="content" placeholder="评 论 内 容">
+                                        </div>
+                                        <input type="submit" id="submit_button" value="提 交">
+                                </form> -->
+                                   
+                                {% csrf_token %}
+                                <div class="comment_item">
+                                        <img src="{%static 'blog/img/person.png'%}" alt="姓名" >
+                                        <input type="text" name="name" placeholder="姓 名" id="name">
+                                </div>
+                                <div class="comment_item">
+                                        <img src="{%static 'blog/img/at.png'%}" alt="邮箱" >
+                                        <input type="text" name="email" placeholder="邮 箱 " id="email">
+                                </div>
+                                <div class="comment_item">
+                                        <img src="{%static 'blog/img/pencil.png'%}" alt="评论内容"  >
+                                        <input type="text" name="content" placeholder="评 论 内 容"  id="comment_txt">
+                                </div>
+                                <input type="submit" id="submit_btn" value="提 交">
+                               
+                        </div>
+                  
+
+                </div>
+                <!-- side bar -->
+                <div class="right_panel float_rt">
+                        <div class="input-group">
+                        <!-- 搜索框 -->
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                        </div><!-- /input-group -->
+                        <div class="category_panel">
+                                <div class="catagory_header">
+                                <h3>文章分类</h3>
+                                </div>
+                                <div class="category_content">
+                                        {% for category in categories %}
+                                        <a href="blog/cat/{{category.id}}" >
+                                                <div class="category_item">
+                                                        <div class="float_lf">
+                                                        {{category}}
+                                                        </div>
+                                                </div>
+                                        </a>
+                                        {% endfor %}
+                                </div>
+                        </div> 
+                </div>
+
+         </div>
+        <div class="back_to_top">
+            <a href="#top" target="_self">返回顶部</a>
+            <a href="{% url 'blog_get_blogs' %}" target="_self">博客主页</a>
+        </div>
+    <!--     <script src="{% static 'blog/jquery/jquery-3.0.0.min.js'%}"></script>
+        <script type="text/javascript" src ="{% static ' blog/js/get_detail.js'  %}"></script>
+        <script src="{% static 'blog/bootstrap/js/bootstrap.min.js' %}"></script> -->
+</body>
+</html>
+

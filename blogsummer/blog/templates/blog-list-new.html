@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的博客</title>
+{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/get_blog.css' %}" />
+	<link href="{% static 'blog/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+
+</head>
+<body>
+	<!-- 这个图片是作为背景图片的，需要在上面显示一些内容 -->
+	<div class="top" id="top">
+		<img src="{% static 'blog/img/top_img_md.jpg' %}" class="img-responsive" alt="My Blog">
+	<!-- 	<div class="navigator">
+                            <span class="nav_item">博客主页</span >
+                            <span  class="nav_item">目录视图</span >
+                            <span class="nav_item">摘要视图</span >
+		</div> -->
+	</div>
+	<div class="content">
+		<!-- blog content -->
+		<div class="left_panel float_lt">
+			{% for blog in blogs %}
+			<div class="blog_box">
+				<div class="blog_title">
+					<b><a href= "{% url 'blog_get_detail' blog.id %}">{{ blog.title }}</a> </b>
+					<span class="author" >{{ blog.author }}</span>
+				</div>
+
+				<div class="blog_summary">{{ blog.content|truncatechars:200 }}</div>
+
+				<div class="blog_info">
+					<small><span class="blog_created" >{{ blog.created|date:"Y-m-d H:i" }}</span></small>
+					<small><span class="dc_sep">/</span></small>
+					<small ><span class="blog_category" >{{ blog.category.name }}</span></small><!-- maybe some style ,such as display category in button -->
+				</div>
+			</div>
+			{% endfor %}
+
+			<div class="pagination">
+				<ul>
+					{% if  blogs.number > 1 %}
+					<li class="page_btn">
+						 <a   href="?page=1" ><<</a>
+					</li>
+					{% endif %}
+
+					{% if blogs.has_previous %}
+					<li class="page_btn">
+						<a href="?page={{ blogs.previous_page_number }}"><</a>
+					</li>
+					{% endif %}
+				
+					{% if blogs.has_second_prev %}
+					<li class="page_btn">
+						<a href="?page={{ blogs.second_prev_page_number }}">{{ blogs.second_pre_page_number }}</a>
+					</li>
+					{% endif %}
+
+					{% if blogs.has_previous %}
+					<li class="page_btn">
+						<a href="?page={{ blogs.previous_page_number }}">{{ blogs.previous_page_number }}</a>
+					</li>
+					{% endif %}
+
+					<li class="page_btn " id="cur_page">
+						 <a   href="?page={{ blogs.number }} " >{{ blogs.number }} </a>
+					</li>
+
+				
+					{% if blogs.has_next %}
+					<li class="page_btn">
+						<a   href="?page={{ blogs.next_page_number }}" >{{ blogs.next_page_number }}</a>
+					</li> 
+					{% endif %}
+					
+					{% if blogs.has_second_next %}
+					<li class="page_btn">
+						<a   href="?page={{ blogs.second_next_page_number }}" >{{ blogs.second_next_page_number }}</a>
+					</li> 
+					{% endif %}
+
+					{% if blogs.has_next %}
+					<li class="page_btn">
+						<a   href="?page={{ blogs.next_page_number }}" >></a>
+					</li> 
+					{% endif %}
+					{%if blogs.number < blogs.paginator.num_pages %}
+					<li class="page_btn">
+						<a   href="?page={{ blogs.paginator.num_pages }}" >>></a>
+					</li> 
+					{% endif %}
+
+				</ul>
+					
+
+					
+			</div>
+			
+		</div>	
+
+		<div class="right_panel float_rt">
+			<div class="category_panel">
+				<div class="catagory_header">
+					<h3>文章分类</h3>
+				</div>
+				<div class="category_content">
+					{% for category in categories%}
+					<a href="blog/cat/{{category.id}}" >
+						<div class="category_item">
+							<div class="float_lf">
+								{{category}}
+							</div>
+						</div>
+					</a>
+					{% endfor %}
+			</div>
+
+		</div>
+
+
+		<div class="back_to_top">
+			<a href="#top" target="_self">返回顶部</a>
+			<a href="{%url 'blog_get_blogs' %}" target="_self">博客主页</a>
+		</div>
+		
+
+	</div>	
+	<script src="{%static 'blog/jquery/jquery-3.0.0.min.js'%}"></script>
+	<script src="{% static 'blog/bootstrap/js/bootstrap.min.js'}"></script>
+</body>
+</html>
+
+
