@@ -13,7 +13,8 @@ $("#submit_btn").click(function(){
          	$("#name").attr("value",'');
          	$("#email").attr("value",'');
          	$("#content").attr("value",'');
-                 $("p.comment_item:first").before("<p class=‘comment_item’> "+ data['name']+  "says：" + data['content'] +"</p> ");
+                 $("p.comment_item:first").before("<p class=‘comment_item’> "+ data['name']+  " says：" + data['content'] +"</p> ");
+
             }
         );
 });	
