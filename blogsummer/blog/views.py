@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Blog,Category,Comment
 from django.core.paginator import Paginator ,EmptyPage,PageNotAnInteger
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 # Create your viewfrom django.http import Http404
 from .forms import CommentForm
 
@@ -25,7 +25,8 @@ def get_blogs(request):
     "page_num":page_num,
     }
     return render(request, 'blog-list-new.html', ctx)
-
+    
+@ensure_csrf_cookie
 def get_detail(request, blog_id):
     try:
         blog = Blog.objects.get(id=blog_id)
@@ -84,13 +85,19 @@ def add_comment(request,blog_id):
         raise Http404
     if request.is_ajax() and request.method == 'POST':
     #那就要把接收到的内容，放入数据库，同时添加到网页显示
+        name=request.POST.get("name")
+        email=request.POST.get("email")
+        content=request.POST.get("content")
         data={
-            "name":request.POST.get("name"),
-            "email":request.POST.get("email"),
-            "content":request.POST.get("content"),
-            "blog":blog,}
+            "name":name,
+            "email":email,
+            "content":content,
+            "blog":blog}
         Comment.objects.create(**data)
-    return JsonResponse(data)
+        return_data={
+            "name":name,
+            "content":content}
+    return JsonResponse(return_data)
         
 
 

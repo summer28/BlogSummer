@@ -1,21 +1,20 @@
-
-$(document).ready(function() {
-	$("#submit_btn").click(function(){
-		
-		$.post(
-			"add_comment/",
-			{
-				"name":$("#name").val(),
-				"email":$("#email").val(), 
-				"content":$("#comment_txt").val(),
-			},
-			function(data)
-			{	
-				alert("success")
-				$("p.comment_item:first").before("<p class=‘comment_item’> "+ data['name']+  "说：" + data['content'] +"</p> ")
-			},
-			"json"
-		)
-	})
-})
-
+$(document).ready(function(){
+$("#submit_btn").click(function(){
+      
+        $.post(
+             "comment/",
+             {
+                 name:$("#name").val(),
+                 email:$("#email").val(), 
+                 content:$("#content").val()
+             },
+             function(data)
+             {   	
+         	$("#name").attr("value",'');
+         	$("#email").attr("value",'');
+         	$("#content").attr("value",'');
+                 $("p.comment_item:first").before("<p class=‘comment_item’> "+ data['name']+  "says：" + data['content'] +"</p> ");
+            }
+        );
+});	
+});
