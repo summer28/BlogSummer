@@ -38,9 +38,5 @@ class Comment(models.Model):
     content = models.CharField('内容', max_length=140)
     created = models.DateTimeField('发布时间', auto_now_add=True)
     
-class Replay(models.Model):
-    replay_user=models.CharField('称呼', max_length=16)
-    replay_date=models.DateTimeField('发布时间', auto_now_add=True)
-    content=models.TextField('正文')
-    comment=models.ForeignKey(Comment, verbose_name='评论')
+
 

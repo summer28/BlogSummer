@@ -4,11 +4,12 @@
         <meta charset="UTF-8">
         <title>{{ blog.title }}</title>
         {% load staticfiles %}
-        <link rel="stylesheet" type="text/css" href="{% static 'blog/css/blog_detail.css' %}" />
+      
         <link href="{% static 'blog/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-        <!-- <script type="text/javascript" src="{% static 'blog/jquery/jquery-3.0.0.js' %}"></script> -->
-        <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script>
-        <script type="text/javascript" src ="{% static 'blog/js/get_detail.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/css/blog_detail.css' %}" />
+        <script type="text/javascript" src="{% static 'blog/jquery/jquery-3.0.0.js' %}"></script>
+       <!--  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script> -->
+        <script type="text/javascript" src ="{% static 'blog/js/comment_action.js' %}"></script>
         <script type="text/javascript" src ="{% static 'blog/js/comment_submit_ajax.js' %}"></script> 
 
 </head>
@@ -17,61 +18,55 @@
 
         <div class="top">
                 <img src="{% static 'blog/img/top_img_md.jpg' %}" class="img-responsive" alt="My Blog">
-             <!--    <div class="navigator  float_rt">                       
-                            <span class="nav_item">博客主页</span >
-                            <span  class="nav_item">目录视图</span >
-                            <span class="nav_item">摘要视图</span >
-                </div> -->
+            
         </div>
         <div class="content">
                 
                 <!-- blog content -->
                 <div class="left_panel float_lt">
                     
-                        <!-- <div class="header">
-                          <span><a href="{% url 'blog_get_blogs' %}">博客</a> - <a href="{% url 'blog_get_detail' blog.id %}">{{ blog.title }}</a></span>
-                        </div> -->
- 
-                        <div class="blog_info">
+                          <div class="blog_info">
                                 <small><span class="blog_created" >{{ blog.created|date:"Y-m-d H:i" }}</span></small>
                                 <small><span class="dc_sep">/</span></small>
                                 <small ><span class="blog_category" >{{ blog.category.name }}</span></small>
-                        </div>
+                          </div>
                 
-                        <div class="title">
+                          <div class="title">
                                 <a href="{% url 'blog_get_detail' blog.id %}"><h2>{{ blog.title }}</h2></a>
-                        </div>
+                          </div>
                 
-                        <div class="blog_content">
+                          <div class="blog_content">
                                 {{ blog.content }}
-                        </div>
-             
-                        <div class="comments"">
-                                <div class="comment_header"><h3>查看评论</h3></div>
-                                {% for comment in comments %}
-                                <p class="comment_item" ">{{comment.name}} says : {{comment.content}}</p>
-                                {% endfor %}
-                        </div>
+                          </div>
+                        <!-- if comments is null ,display "no comment for now" -->
+                          <div class="  comments_list"">
+                                <div class="   comment_list_header "><h3>评论列表</h3></div>
+                                    
+                                        <span class="locate_comment"><span>
+                                        {% for comment in comments %}
+                                        <p class=" comment_list_item" >{{comment.name}} says : {{comment.content}}</p>
+                                        {% endfor %}
+               
+                         </div>
 
                         <!-- submit comment -->
                         <div class="comment_submit">
                                 <h3 class="comment_post_header">提交评论</h3>
-                                        <div class="comment_item">
-                                                <img src="{%static 'blog/img/person.png'%}" alt="姓名" class="person" >
-                                                <input  id="name" type="text" name="name" placeholder="姓 名">
-                                        </div>
-                                        <div class="comment_item">
-                                                <img src="{%static 'blog/img/at.png'%}" alt="邮箱" class="email" >
-                                                <input id="email" type="text" name="email" placeholder="邮 箱">
-                                        </div>
-                                        <div class="comment_item">
-                                                <img src="{%static 'blog/img/pencil.png'%}" alt="评论内容" class="comment_txt" >
-                                                <input id="content" type="text" name="content" placeholder="评 论 内 容">
-                                        </div>
-                                        <input type="submit" id="submit_btn" value="提 交">         
+                                    <div class="comment_item">
+                                            <img src="{%static 'blog/img/person.png'%}" alt="姓名" class="person" >
+                                            <input  id="name" type="text" name="name" placeholder="姓 名">
+                                    </div>
+                                    <div class="comment_item">
+                                            <img src="{%static 'blog/img/at.png'%}" alt="邮箱" class="email" >
+                                            <input id="email" type="text" name="email" placeholder="邮 箱">
+                                    </div>
+                                    <div class="comment_item">
+                                            <img src="{%static 'blog/img/pencil.png'%}" alt="评论内容" class="comment_txt" >
+                                          <!--   <input id="content" type="text" name="content" placeholder="评 论 内 容"> -->
+                                            <textarea  id="content" name="content" placeholder="评 论 内 容" rows="1" ></textarea>
+                                    </div>
+                                    <input type="submit" id="submit_btn" value="提 交">         
                         </div>
-                  
-
                 </div>
                 <!-- side bar -->
                 <div class="right_panel float_rt">

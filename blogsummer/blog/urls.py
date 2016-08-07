@@ -1,5 +1,5 @@
-from django.conf.urls import url
-
+from django.conf.urls import url,include
+from django_comments import urls
 from . import views
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
 	url(r'^(?P<blog_id>\d+)/$', views.get_detail, name='blog_get_detail'),
 	url(r'^cat/(?P<category_id>\d+)/$', views.get_category, name='blog_get_category'),
 	url(r'^(?P<blog_id>\d+)/comment/$',views.add_comment, name='comment'),
+	url(r'^(?P<blog_id>\d+)/comments/',include('django_comments.urls')),
 ]

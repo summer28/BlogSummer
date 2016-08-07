@@ -1,0 +1,373 @@
+
+body{
+	padding-top: 70px;
+	/*background:url(/static/img/background.jpg);
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+	-moz-background-size:100% 100%;  
+    background-size:100% 100%; */
+}
+
+pre{
+	white-space: pre-wrap;       /* css-3 */ 
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */ 
+	white-space: -pre-wrap;      /* Opera 4-6 */ 
+	white-space: -o-pre-wrap;    /* Opera 7 */ 
+}
+
+/*首页*/
+.banner{
+	background: #222 url("/static/img/banner.jpg") no-repeat scroll center 0px / cover;
+	text-align: center;
+	color: #fff;
+	min-height: 400px;
+	position: relative;
+	margin-top: -30px;
+	padding-top: 152px;
+	margin-bottom: 20px;
+}
+.banner a{
+	font-weight: 700;
+  	color: #fff;
+  	font-size: 64px;
+}
+.banner a:hover{
+	text-decoration: none;
+	color:#fff;
+	padding-bottom:5px;
+	border-bottom:1px dashed #fff;
+}
+.banner .banner-text{
+	margin-top: 1em;
+}
+
+.module h3{
+	padding-left: 0.5em;
+	margin-bottom:0.5em;
+}
+.module h3 a{
+	font-size: 70%;
+}
+.module_detail li{
+	display:block;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.blog_type .panel-body{
+	position: relative;
+	height: 424px;
+}
+.blog_simple .panel{
+	margin-left:-20px;
+}
+
+/*菜单*/
+.menu_icon{
+	margin-top:-5px;
+}
+.navbar-form{
+	position: relative;
+	right: 10px;
+}
+.navbar-form button[type="submit"]{
+	position: absolute;
+	top:24%;
+	right: 20px;
+	background:none;
+	border:none;
+}
+@media (max-width: 767px){
+	.navbar-form button[type="submit"]{
+		top:35%;
+	}
+}
+@media (min-width:768px){
+	.navbar-default{padding-right: 20px;}
+}
+
+.navbar-form .glyphicon{
+	color: #555;
+}
+.navbar-down {
+  box-shadow: 0 0 5px #888;
+}
+
+/*页尾*/
+.page-bottom{
+	/*position:absolute;*/
+	/*bottom:0;*/
+	clear:both;
+	width: 100%;
+	margin: 10px 0 5px 0;
+	padding-top: 2em;
+	text-align: center;
+}
+.page-bottom ul{
+	float:left;
+	position:relative;
+	left:50%;
+}
+.page-bottom li{
+	float:left;
+	position:relative;
+	right:50%;
+}
+.page-bottom li a{
+	padding-right:0.5em;
+}
+.page-bottom .end{
+	clear:both;
+}
+
+/*标签*/
+.tags{
+	border-left:1px solid #e7e7e7;
+}
+
+.tags h4{
+	border-bottom: 1px solid #ccc;
+	padding: 0.5em 0;
+}
+.tags h4,.tags li{
+	white-space: nowrap;
+}
+
+/*博文*/
+.blog_header h3{
+	margin-top:10px;
+}
+.blog_header h3{
+	color: #0d56a6;
+}
+.blog_content{
+	padding: 1em 1em 0;
+}
+.blog_content p{
+	text-indent: 2em;
+}
+.blog_content .badge{
+	text-indent: 0;
+}
+.blog_content pre{
+	margin-left: 2em;
+}
+.blog_content img{
+	display:block;
+	height:auto;
+	max-width:90%;
+	margin-left:2em;
+}
+.blog_footer{
+	margin-top: -0.5em;
+	margin-bottom: 0.5em;
+	padding: 1em 2em 0.5em;
+	/*border: 1px dashed #eee;*/
+	border-radius:5px;
+	border-left: 15px solid #0D5692;
+	background-color:#fff;
+}
+.blog_list_footer{
+	text-align: center;
+}
+.blog_list_footer .blog_footer_tip{
+	display: block;
+	width: 100%;
+	padding:0.5em 0 0 0;
+	margin-bottom: -0.5em; 
+	font-size: 1em; 
+}
+
+/*博文列表*/
+.blog_bottom{
+	margin-top: 5px;
+}
+
+/*评论*/
+.blog_comment{
+	border-bottom: 1px solid #ddd;
+}
+.blog_comment .comment_title{
+	margin-top: 0.5em;
+}
+.blog_comment .comment_content{
+	/*margin-left: 1.5em;*/
+	padding: 0.5em;
+	border-radius: 6px;
+	background-color: #efefef;
+}
+.blog_comment .comment_reply{
+	text-indent: 0.5em;
+}
+.blog_comment .comment_reply li{
+	padding-bottom: 0.3em;
+}
+
+/*在线工具*/
+.tool img{
+	width: 64px;
+	height: 64px;
+	margin-right: 10px;
+	float: left;
+	border-right: 1px dashed #ddd;
+	padding-right: 4px;
+	position: relative;
+	top: 2px;
+	left: -1px;
+}
+.tool{
+	padding: 0px 5px 5px;
+	/*border: 2px solid #ddd;*/
+	border-radius: 4px;
+	width: 190px;
+	height: 72px;
+	background-color: #fff;
+	margin: 0 0 0.5em 0.5em;
+	float: left;
+}
+.tool a{
+	text-decoration: none!important;
+}
+.tool h4{
+	margin-bottom: 5px;
+}
+.tool small{
+	color: #333;
+	display: block;
+}
+.tool:hover{
+	border: 1px solid #ddd;
+}
+
+.tooltype h3{
+	/*-70再加70是锚点定位偏移*/
+	margin-top:-70px;
+	padding-top:75px;
+	margin-left:0.5em;
+}
+
+/*回到顶部*/
+.gotop{
+	display: block;
+	position: fixed;
+	bottom: 10px;
+	right: 20px;
+}
+#scrolltop{
+	display: none;
+}
+
+/*评论区域*/
+.comment_text{
+	width: 100%;
+	height: 9em;
+	overflow-y: visible;
+}
+.comment_button{
+	margin-top:0.5em;
+	float: right;
+}
+.comment_button #reset_btn{
+	margin-right:1em;
+}
+
+/*课程列表*/
+.tutorial_typename{
+	/*border-radius: 6px;*/
+	/*border-bottom:1px solid #ccc;*/
+	margin-bottom:1em;
+	margin-left:3px;
+}
+.tutorial_type h3{
+	padding-left:0.5em;
+}
+.tutorial_list{
+	margin-left:1.5em;
+}
+.tutorial{
+	float: left;
+	width: 230px;
+	border: 1px solid #dfdfdf;
+	border-radius: 6px;
+	padding: 9px 9px 7px;
+	margin: 0 0 0.5em 0.5em;
+}
+.tutorial:hover{
+	border: 1px solid #aaa;
+}
+
+/*课程图片*/
+.tutorial .preview{
+	width: 210px;
+	height:132px;
+	border-radius: 4px;
+}
+/*课程文字*/
+.tutorial p{
+	margin-bottom: 0;
+	padding-left: 2px;
+	color: #555;
+}
+.tutorial .title{
+	margin: 6px 0 4px;
+	font-size: 1.2em;
+}
+.tutorial .teacher{
+	float: left;
+}
+.tutorial .class_num{
+	text-align: right;
+	float: right;
+}
+
+/*教程内容*/
+.tutorial-img{
+	float: left;
+}
+.tutorial-main-img{
+	width: 350px;
+	margin:0em 1.5em 1em 0;
+	border-radius:6px;
+}
+
+.tutorial-title{
+	margin-top: -0.8em;
+}
+.tutorial-title h3{
+	margin-left: -0.2em;
+	margin-bottom: 1em;
+	white-space:nowrap;/* 不换行 */
+}
+.tutorial-title p{
+	margin-bottom: 2px;
+	white-space:nowrap;/* 不换行 */
+}
+.tutorial-title .btn{
+	margin: 11px 0 1em -2px;
+}
+
+.tutorial-descript{
+	margin-top: 1em;
+}
+.descript-title{
+	font-size: 18px;
+	border-left: 5px solid #286090;
+	display: block;
+	width: 100%;
+	padding: 0.3em;
+	margin-bottom: 0.5em;
+}
+.tutorial-descript p{
+	padding-left: 2em;
+}
+.tutorial-content p{
+	text-indent: 2em;
+	font-weight: bold;
+}
+.tutorial-content ul li{
+	text-indent: 4em;
+	max-width:600px; 
+}
+.tutorial-content ul small{
+	float: right;
+}
