@@ -1,6 +1,4 @@
-.container{
-	margin-top: 80px;
-}
+
 .control-group{
 	margin-bottom: 20px;
 }
@@ -22,13 +20,8 @@
 	margin-right: 15px;
 }
 .tags{
-	
+
 	border-left-style: solid;
 	border-left-width: 2px;
 	border-left-color: #DDD;
-}
-.catogry_title{
-	border-bottom-style: solid;
-	border-bottom-width: 2px;
-	border-bottom-color: #DDD;
 }

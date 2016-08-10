@@ -2,7 +2,7 @@
 {% block head %}
 {% load staticfiles %}
 
-	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/detail.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/base.css' %}" />
 	
 {% endblock %}
 {% block content %}
@@ -12,9 +12,9 @@
 		<div class="blog_header">
 			<a href= "{% url 'blog_get_detail' blog.id %}"><h2>{{ blog.title }}</h2></a> 
 
-			<small><span class="blog_created" >发布时间：{{ blog.created|date:"Y-m-d H:i" }}</span></small>
-			<small><span class="dc_sep">/</span></small>
-			<small ><span class="blog_category" >{{ blog.category.name }}</span></small>
+			<span class="blog_created" >发布时间：{{ blog.created|date:"Y-m-d H:i" }}</span>
+			<span class="dc_sep">/</span></small>
+			<span class="blog_category" >{{ blog.category.name }}</span>
 		</div>
 	</div>
 

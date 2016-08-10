@@ -1,5 +1,12 @@
+body{
+	font-size: 19px;
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+	line-height: 2em;
+}
 .container{
 	margin-top: 80px;
+	width:90%;
+
 }
 
 .tags{
@@ -9,3 +16,8 @@
 	border-left-color: #DDD;
 }
 
+.catogry_title{
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #DDD;
+}

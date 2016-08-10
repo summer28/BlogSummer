@@ -7,6 +7,7 @@
         {% load staticfiles %}
       
         <link href="{% static 'blog/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+         <link rel="stylesheet" type="text/css" href="{% static 'blog/css/base.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'blog/css/detail.css' %}" />
         <script type="text/javascript" src="{% static 'blog/jquery/jquery-3.0.0.js' %}"></script>
        <!--  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script> -->
@@ -52,7 +53,7 @@
                                   <div class="panel panel-default">
                                           <div class="panel-heading">
                                                     <div class="blog_header">
-                                                            <h3>{{ blog.title }}</h3>
+                                                            <a href= "{% url 'blog_get_detail' blog.id %}"><h2>{{ blog.title }}</h2></a> 
                                                             <span>
                                                                 发布时间：{{ blog.created|date:"Y-m-d H:i" }}
                                                             </span>
