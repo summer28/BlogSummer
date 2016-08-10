@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
-from .models import Blog,Category,Comment
+from .models import Blog,Category
 from django.core.paginator import Paginator ,EmptyPage,PageNotAnInteger
 from django.views.decorators.csrf import ensure_csrf_cookie
 # Create your viewfrom django.http import Http404
@@ -9,8 +9,8 @@ from .forms import CommentForm
 
 def get_blogs(request):
     all_blogs=Blog.objects.all().order_by('-created')
-    blog_paginator=Paginator(all_blogs,3)#show 8 blogs per page
-    page_num=blog_paginator.num_pages;
+    blog_paginator=Paginator(all_blogs,8)#show 8 blogs per page
+   
     page=request.GET.get('page')
     try:
         blogs=blog_paginator.page(page)
@@ -22,43 +22,27 @@ def get_blogs(request):
     ctx = {
     'blogs': blogs,
     'categories':Category.objects.all(),
-    "page_num":page_num,
+
     }
-    return render(request, 'blog-list-new.html', ctx)
+    return render(request, 'blog-list.html', ctx)
     
-@ensure_csrf_cookie
+# @ensure_csrf_cookie
 def get_detail(request, blog_id):
     try:
         blog = Blog.objects.get(id=blog_id)
     except Blog.DoesNotExist:
         raise Http404
 
-    if request.method == 'GET':
-            form = CommentForm()
-    else:
-            form = CommentForm(request.POST)
-    if form.is_valid():
-             cleaned_data = form.cleaned_data 
-             # django use cleaned_data to get the content of the form 
-             # add  a blog key to the dictionary
-             cleaned_data['blog'] = blog
-             # use the dictionary to create a  Comment object 
-             Comment.objects.create(**cleaned_data)
-
     ctx ={
             'blog': blog,
             'categories':Category.objects.all(),
-            'comments': blog.comment_set.all().order_by('-created'),
-            'form': form,
-
-
             }
-    return render(request, 'blog-detail.html', ctx)
+    return render(request, 'blog-detail-new.html', ctx)
     
     
 def get_category(request, category_id):
     try:
-        cat=Category.objects.get(category_id)
+        cat=Category.objects.get(id=category_id)
     except Category.DoesNotExist:
         raise Http404
     cat_blogset=cat.blog_set.all().order_by('-created')
@@ -75,7 +59,7 @@ def get_category(request, category_id):
     'blogs': blogs,
     'categories':Category.objects.all(),
     }
-    return render(request, 'blog-list-new.html', ctx)
+    return render(request, 'blog-list.html', ctx)
     
 
 def add_comment(request,blog_id):

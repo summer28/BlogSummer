@@ -7,11 +7,11 @@
         {% load staticfiles %}
       
         <link href="{% static 'blog/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{% static 'blog/css/base.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'blog/css/detail.css' %}" />
         <script type="text/javascript" src="{% static 'blog/jquery/jquery-3.0.0.js' %}"></script>
        <!--  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js"></script> -->
         <script type="text/javascript" src ="{% static 'blog/js/comment_action.js' %}"></script>
-        <script type="text/javascript" src ="{% static 'blog/js/comment_submit_ajax.js' %}"></script>
+     <!--    <script type="text/javascript" src ="{% static 'blog/js/comment_submit_ajax.js' %}"></script> -->
 </head>
 
 <body>
@@ -24,34 +24,31 @@
                                   <span class="icon-bar"></span>
                                   <span class="icon-bar"></span>
                           </button>
-                          <a class="navbar-brand" href="/">博客</a>
+                          <a class="navbar-brand" href="/">钟陈陈的博客</a>
                  </div> 
                  <div class="collapse navbar-collapse" id="example-navbar-collapse">
                          <ul class="nav navbar-nav">
                                   <li class="active">
-                                           <a href="/blog/"> 博客</a>
+                                           <a href="/blog/">博客主页</a>
                                   </li>
                                   <li class="">
-                                          <a href="/tutorial/"><img class="menu_icon" src="/static/img/menu_icon_edu.png"> 教程</a>
+                                          <a href="/about_me/">个人介绍</a>
                                   </li>
                          </ul>
-                        
                         <form action="/blog/search" class="navbar-form navbar-right">
                                 <input name="wd" type="text" placeholder="搜索博文" class="form-control">
                                 <button type="submit">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>
                         </form>
-
                         <ul id="user_part" class="nav navbar-nav navbar-right">  
                         </ul>
                  </div>
         </div>    
         
-        <div class="container">   
-            
-    	        <div class="row">
-    		        <div class="col-md-9">
+        <div class="container">      
+      	        <div class="row">
+        		            <div class="col-md-9">
                                   <div class="panel panel-default">
                                           <div class="panel-heading">
                                                     <div class="blog_header">
@@ -68,60 +65,190 @@
                                                      </div>
                                            </div>
                                   </div>
+                                  
 
-                                 <div class="panel panel-default">
+
+                                  <div class="panel panel-default">
                                           <div class="panel-heading">
                                                   <h4>新的评论</h4>
                                           </div>
 
-                                         <div class="panel-body">
+                                          <div class="panel-body">
                                                   <div class="row">
                                                            <div class="col-md-12">
-                                                                    <textarea class="input-xlarge comment_text" id="id_comment" name="comment" placeholder="请输入评论内容"></textarea>
-                                					<!--如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论-->
-                                					<input type="text" style="display:none;" id="id_honeypot" name="honeypot">
-                                                           </div>
+                                                                      {% load comments %}
+                                                                      {% get_comment_form for blog as blog_form %} 
+                                                                     <form class="form-horizontal" onsubmit="return false;" method="post" id="comment_form">
+                                                                      {% csrf_token %}
+
+                                                                     <!--  all needed  except for site and submit_date .blog_form does not have site or submit_date value .Does site  can be got from the backend??-->
+                                                                      {{ blog_form.object_pk }}
+                                                                      {{ blog_form.content_type }}
+                                                                      {{ blog_form.timestamp }}
+                                                                      {{ blog_form.security_hash }}
+                                                                      <!-- {{ blog_form.site }}
+                                                                      {{ blog_form.submit_date }} -->
+                                                                      <input type="hidden" name="next" value="{% url 'blog_get_detail' blog.id %}"/>
+                                                                      <input id="reply_to" type="hidden" name="reply_to" value="0" />
+                                                                      <input id="root_id" type="hidden" name="root_id" value="0" />
+                                                                      <input id="reply_name" type="hidden" name="reply_name" value=""/>
+
+                                                                      <a name="newcomment" id="newcomment"></a>
+
+                                                                      <div class="control-group">
+                                                                          <label class="control-label" for="id_comment">评论： </label>
+                                                                          <div class="comment_form_display">
+                                                                              <textarea class="input-xlarge comment" rows="6" id="id_comment" name="comment" placeholder="请输入评论内容"></textarea>
+                                                                          </div>
+                                                                      </div>
+
+                                                                      <div   class="control-group">
+
+                                                                                <label for="id_name">名称： </label>
+                                                                                
+                                                                                    <input type="text" id="id_name" class="input-xlarge" name="name" placeholder="请输入您的用户名" />
+                                                                              
+                                                                                <label for="id_email">邮箱： </label>
+                                                                                
+                                                                                    <input class="input-xlarge" id="id_email" type="email" name="email" placeholder="请输入您的邮箱地址"  />
+       
+                                                                      </div>
+                                                                      <div class="control-group">
+                                                                              <button id="submit_btn" class="btn btn-info">提交</button>
+                                                                              <button id="delete_btn" class="btn btn-default">清空</button>
+                                                                      </div>
+
+                                                                      <p style="display:none;">
+                                                                                <label for="id_honeypot">如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论。</label> <input type="text" name="honeypot" id="id_honeypot">
+                                                                      </p>
+
+                                                                   <!--    <div class="controls">
+                                                                                <div class="form-actions">
+                                                                                    <input class="btn btn-info" id="submit_btn" type="submit"   name="submit" value="提交"/>
+                                                                                    <button id="submit_btn" class="btn btn-info">submit</button>
+                                                                                 
+                                                                                </div>
+                                                                      </div> -->
+                                                                     </form>
+                                                            </div>
                                                   </div>
+                                          </div>
+                                  </div>
 
-                                                  <div class="row">
-                                                      <div class="form-actions comment_button">
-                                                        <input class="btn btn-info" id="submit_btn" type="submit" name="submit" value="提交"/>
-                                                        <input class="btn" id="reset_btn" type="reset" name="submit" value="清空"/>
-                                                      </div>
-                                                 </div>
-                                         </div>
-                                 </div>
-
-
-                                <div class="panel panel-default">
-                                           <div class="panel-heading">
+                                
+                                  <div class="panel panel-default">
+                                          <div class="panel-heading">
                                                 <h4>评论列表</h4>
-                                           </div>
-                                           {% load comments %}
-                                           <div class="panel-body">
-                                                 {% get_comment_list for blog as comments %}
+                                          </div>
+                                       
+                                          <div class="panel-body" >
+                                                    {% get_comment_list for blog as comments %}
+                                                    <span id="comment_start"></span>
                                                     {% for comment in comments %}
-                                                        <p class=" comment_list_item" >{{comment.name}} says : {{comment.content}}</p>
-                                                    
-                                                    {% endfor %}                                  
-                                         </div>
-                                 </div>
+                                                    <div class="blog_comment" name="F{{comment.id}}">
+                                                            <p class="comment_title">
+                                                                {{comment.submit_date|date:"Y-m-d H:i"}}  |  {{comment.user_name}} 评论
+                                                            </p>
+                                                            <p class="comment_content"
+                                                               root='{{comment.id}}'
+                                                               role='{{comment.id}}'
+                                                               base='{{comment.user_name}}'>
+                                                               {{ comment.comment }}
+                                                            </p>
 
+                                                            <ul class="comment_reply">
+                                                                {% for reply in comment.replies %}
+                                                                    <li root='{{reply.root_id}}'
+                                                                        role='{{reply.id}}'
+                                                                        base='{{reply.user_name}}'>
+                                                                        {{reply.user_name}} 回复 {{reply.reply_name}} ({{ reply.submit_date|date:"Y-m-d H:i"}})：{{ reply.comment }}
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                    </div>
+                                                        
+                                                    {% endfor %}
+                                          </div>
+                                  </div>
+                           <!--        <div id="reply_form" style="display:none;text-indent:0;">
+                                          {% get_comment_form for blog as blog_form %} 
+                                          <form  onsubmit="return false;" id="reply_update_form">
+                                              {% csrf_token %}
+                                              {{ blog_form.object_pk }}
+                                              {{ blog_form.content_type }}
+                                              {{ blog_form.timestamp }}
+                                              {{ blog_form.site }}
+                                              {{ blog_form.submit_date }}
+                                              {{ blog_form.security_hash }}
+                                              <input type="hidden" name="next" value="{%url 'blog_get_detail' blog.id%}"/>
+                                              <input id="reply_to" type="hidden" name="reply_to" value="0" />
+                                              <input id="root_id" type="hidden" name="root_id" value="0" />
+                                              <input id="reply_name" type="hidden" name="reply_name" value="">
+                                              <div class="control-group">
+                                                    <label class="control-label" for="id_name">名称： </label>
+                                                    <div class="controls">
+                                                        <input type="text" id="id_name_reply" class="input-xlarge" name="name" placeholder="请输入您的用户名" value="{{ user.username }}"/>
+                                                    </div>
+                                              </div>
 
-    		        <div class="col-md-3 tags">
-    			         <h4>文章分类</h4>
+                                              <div class="control-group">
+                                                  <label class="control-label" for="id_email">邮箱： </label>
+                                                  <div class="controls">
+                                                      <input class="input-xlarge" id="id_email_reply" type="email" name="email" placeholder="请输入您的邮箱地址" value="{{ user.email }}"/>
+                                                  </div>
+                                              </div>
+
+                                              <a name="newcomment" id="newcomment_reply"></a>
+                                              <div class="control-group">
+                                                  <label class="control-label" for="id_comment">评论： </label>
+                                                  <div class="controls">
+                                                      <textarea class="input-xlarge comment" rows="6" id="id_comment_reply" name="comment" placeholder="请输入评论内容"></textarea>
+                                                  </div>
+                                              </div>
+
+                                              <p style="display:none;">
+                                                  <label for="id_honeypot_reply">如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论。</label> <input type="text" name="honeypot" id="id_honeypot">
+                                              </p> -->
+
+<!--                                               <div class="controls">
+                                                  <div class="form-actions">
+                                                      <input class="btn btn-info" id="submit_btn" type="submit"   name="submit" value="提交"/>
+                                                      <button id="submit_btn" class="btn btn-info">submit</button>
+                                                   
+                                                  </div>
+                                              </div> -->
+                                              <!-- <div class="row">
+                                                  <div class="col-md-12">
+                                                      <textarea class="input-xlarge comment_text" id="id_comment_reply" name="comment" placeholder="请输入回复内容"></textarea>
+
+                                                      <input type="text" style="display:none;" id="id_honeypot_reply" name="honeypot">
+                                                  </div>
+                                              </div>
+ --><!-- 
+                                              <div class="row">
+                                                    <div class="form-actions comment_button">
+                                                       <input class="btn btn-info" id="submit_reply" type="submit" name="submit" value="回复"/> -->
+                                                <!--       <button id="submit_reply" class="btn btn-info">submit</button>
+                                                      <input class="btn" id="reset_btn" type="reset" name="submit" value="清空"/>
+                                                    </div>
+                                              </div>
+                                          </form> --> 
+                                <!-- </div> -->
+                          </div>
+                           
+                          <div class="col-md-3 tags">
+                                  <div class =catogry_title><h4>文章分类</h4></div>
                                   <div class="category_content">
                                            {% for category in categories %}
                                            <a href="blog/cat/{{category.id}}" >
                                                     <div class="category_item">                                                         
-                                                            {{category}}
+                                                           <h4> {{category}}</h4>
                                                     </div>
                                            </a>
                                           {% endfor %}
-                                </div>
-
+                                  </div>
                          </div>
-                 </div>
+                </div>
         </div>
 </body>
 </html>
