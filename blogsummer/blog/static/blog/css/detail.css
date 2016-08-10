@@ -3,11 +3,11 @@
 	margin-bottom: 20px;
 }
 
-#id_comment{
+#id_comment ,#reply_id_comment{
 	width:100%!important;
 }
 
-#id_name ,#id_email{
+#id_name ,#id_email,#reply_id_name ,#reply_id_email{
 	border-style: none;
 	border-bottom-style:solid;
 	border-bottom-width:2px;
@@ -15,7 +15,7 @@
 	width:40%;
 }
 
-#submit_btn,#delete_btn{
+#submit_btn,#delete_btn,#reply_submit_btn,#reply_delete_btn{
 
 	margin-right: 15px;
 }
