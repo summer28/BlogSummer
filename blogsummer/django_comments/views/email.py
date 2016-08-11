@@ -38,5 +38,4 @@ class SendEmail():
             to_list: list,   收件人
         """
         html_content = loader.render_to_string(module, data)
-        print("html content ok")
         self.send_html_email(subject, html_content, to_list)

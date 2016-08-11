@@ -3,19 +3,22 @@
 	margin-bottom: 20px;
 }
 
-#id_comment ,#reply_id_comment{
+/*#id_comment ,#reply_id_comment*/
+.id_comment{
 	width:100%!important;
 }
 
-#id_name ,#id_email,#reply_id_name ,#reply_id_email{
+/*#id_name ,#id_email,#reply_id_name ,#reply_id_email*/
+.id_name, .id_email{
 	border-style: none;
 	border-bottom-style:solid;
 	border-bottom-width:2px;
 	margin-right: 30px;
-	width:40%;
+	width:80%;
 }
 
-#submit_btn,#delete_btn,#reply_submit_btn,#reply_delete_btn{
+/*#submit_btn,#delete_btn,#reply_submit_btn,#reply_delete_btn*/
+.submit_btn, .delete_btn{
 
 	margin-right: 15px;
 }

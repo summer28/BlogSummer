@@ -1,4 +1,8 @@
-body{
+.navbar ,.navbar-brand{
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+	font-size: 20px!important;
+}
+.container{
 	font-size: 19px;
 	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
 	line-height: 2em;
