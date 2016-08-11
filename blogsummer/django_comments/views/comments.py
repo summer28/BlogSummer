@@ -139,19 +139,13 @@ def post_comment(request, next=None, using=None):
 
     # Save the comment and signal that it was saved
     comment.save()
- 
+    
     signals.comment_was_posted.send(
         sender=comment.__class__,
         comment=comment,
         request=request
     )
- 
-    return_data={
-        "user_name":comment.user_name ,
-        "submit_date":comment.submit_date.strftime('%Y-%m-%d %H:%M'),
-        "comment":comment.comment,
-        "result_info":"success"
-    }
+    
 
     from . import email
     try:
@@ -180,22 +174,32 @@ def post_comment(request, next=None, using=None):
                 cams = comment_model.objects.filter(id = comment.reply_to)
                 if cams:
                     to_list.append(cams[0].user_email)
-                    print("reply to  ok")
+
                 else:
                     #没有找到评论，就发给自己（可以修改其他邮箱）
                     to_list.append(settings.DEFAULT_FROM_EMAIL)
 
             #根据模版发送邮件
-            send_email.send_email_by_template(subject, template, email_data, to_list)
+            #send_email.send_email_by_template(subject, template, email_data, to_list)
         else:
             #其他类型的评论暂不处理
             pass
     except Exception:
         #ResponseJson方法是我前面自己加的，可以参考上一篇博文
         return JsonResponse({"result_info":"comment with email fail"})
-        
-    return JsonResponse( return_data)
-    #return next_redirect(request, fallback=next or 'comments-comment-done', c=comment._get_pk_val())
+     
+    return_data={
+        "user_name":comment.user_name ,
+        "submit_date":comment.submit_date.strftime('%Y-%m-%d %H:%M'),
+        "comment":comment.comment,
+        "reply_name": comment.reply_name ,
+        "root_id":comment.root_id ,
+        "reply_to":comment.reply_to ,
+        "comment_id":comment.id,
+        "result_info":"success"
+    }
+    return JsonResponse( return_data)   
+     #return next_redirect(request, fallback=next or 'comments-comment-done', c=comment._get_pk_val())
 
 
 comment_done = confirmation_view(

@@ -4,8 +4,8 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'blog/css/base.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'blog/css/detail.css' %}" />
-<script type="text/javascript" src ="{% static 'blog/js/comment_action.js' %}">
-</script>
+<script type="text/javascript" src ="{% static 'blog/js/comment_action.js' %}"></script>>
+<script type="text/javascript" src ="{% static 'blog/js/reply.js' %}"></script>
 <title>{{ blog.title }}</title>
 
 {% endblock%}
@@ -48,7 +48,9 @@
                                             {{ blog_form.timestamp }}
                                             {{ blog_form.security_hash }}
                                             <input type="hidden" name="next" value="{% url 'blog_get_detail' blog.id %}"/>
-                                            <input id="reply_to" type="hidden" name="reply_to" value="0" />
+
+                                           <!-- a comment form may not need these three filed  -->
+                                             <input id="reply_to" type="hidden" name="reply_to" value="0" />
                                             <input id="root_id" type="hidden" name="root_id" value="0" />
                                             <input id="reply_name" type="hidden" name="reply_name" value=""/>
 
@@ -108,8 +110,9 @@
                                      base='{{comment.user_name}}'>
                                      {{ comment.comment }}
                                   </p>
-
+                                  
                                   <ul class="comment_reply">
+                                  
                                       {% for reply in comment.replies %}
                                           <li root='{{reply.root_id}}'
                                               role='{{reply.id}}'
@@ -117,13 +120,14 @@
                                               {{reply.user_name}} 回复 {{reply.reply_name}} ({{ reply.submit_date|date:"Y-m-d H:i"}})：{{ reply.comment }}
                                           </li>
                                       {% endfor %}
+                                      <span id="reply_start"></span>
                                   </ul>
                           </div>
                               
                           {% endfor %}
                 </div>
         </div>
-          <!--  {% get_comment_form for blog as blog_form %} 
+        <!-- {% get_comment_form for blog as blog_form %}  -->
        <form   class="form-horizontal" onsubmit="return false;" method="post" id="reply_form" style="display:none;text-indent:0;">
         {% csrf_token %}
         {{ blog_form.object_pk }}
@@ -138,24 +142,30 @@
         <div class="control-group">
                 <label class="control-label" for="reply_id_comment">回复： </label>
                 <div class="comment_form_display">
-                    <textarea class="input-xlarge comment" rows="6" id="reply_id_comment" name="comment" placeholder="请输入评论内容"></textarea>
+                    <textarea class="input-xlarge id_comment" rows="5" id="reply_id_comment" name="comment" placeholder="请输入评论内容"></textarea>
                 </div>
         </div>
 
         <div   class="control-group">
-                <label for="reply_id_name">名称： </label>
-                <input type="text" id="reply_id_name" class="input-xlarge" name="name" placeholder="请输入您的用户名" />
-                <label for="reply_id_email">邮箱： </label>
-                <input class="input-xlarge" id="reply_id_email" type="email" name="email" placeholder="请输入您的邮箱地址"  />
+                <div class="row">
+                        <div class="col-md-6">
+                                <label for="reply_id_name">名称： </label>
+                                <input type="text" id="reply_id_name" class="input-xlarge id_name" name="name" placeholder="请输入您的用户名" />
+                        </div>
+                        <div class="col-md-6">
+                                <label for="reply_id_email">邮箱： </label>
+                                <input class="input-xlarge id_email" id="reply_id_email" type="email" name="email" placeholder="请输入您的邮箱地址"  />
+                        </div>
+                </div>
         </div>
         <div class="control-group">
-                <button id="reply_submit_btn" class="btn btn-info">提交</button>
-                <button id="reply_delete_btn" class="btn btn-default">清空</button>
+                <button id="reply_submit_btn" class="btn btn-info submit_btn">提交</button>
+                <button id="reply_delete_btn" class="btn btn-default delete_btn">清空</button>
         </div>
 
         <p style="display:none;">
                   <label for="reply_id_honeypot">如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论。</label> <input type="text" name="honeypot" id="reply_honeypot">
         </p>
 
-       </form>                 -->
+       </form>                
 {% endblock %}

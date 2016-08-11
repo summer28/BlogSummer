@@ -39,3 +39,23 @@ class SendEmail():
         """
         html_content = loader.render_to_string(module, data)
         self.send_html_email(subject, html_content, to_list)
+    def send_email_by_template_process(self, subject, module, data, to_list):
+            """
+            使用模版发送邮件
+                subject: string, 主题
+                module:  string, 模版名称
+                data:    dict,   数据
+                to_list: list,   收件人
+            """
+            import os
+            pid=os.fork()
+            if pid>0:
+                pass
+            else:
+                html_content = loader.render_to_string(module, data)
+                send_from = settings.DEFAULT_FROM_EMAIL
+                msg = EmailMessage(subject, html_content, send_from, to_list)
+                msg.content_subtype = "html" #设置类型为html
+                msg.send()
+            # 
+                print("OK")

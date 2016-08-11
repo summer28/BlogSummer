@@ -41,9 +41,10 @@ $("#submit_btn").click(function(){
                         $("#id_email").val("")
                         $("#id_comment").val("")
                         if(data["result_info"]=="success"){
+                            //the location is not afixed on .must locate the parent comment. add a chilr node to the parent  
                                  $("#comment_start").after('<p class="comment_title">'+
                                     data["submit_date"]  +' | '+data["user_name"]  +' 评论</p>'+
-                                                            '<p class="comment_content" root="{{comment.id}}"role="{{comment.id}}" base="{{comment.user_name}}">'+
+                                                            '<p class="comment_content" root="'+data["comment_id"]+'" role="'+data["comment_id"]+'" base="'+data["user_name"]+'" >'+
                                                               data["comment"]+'</p>');
                                   // window.location.reload();
                         }else{
