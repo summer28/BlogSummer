@@ -31,20 +31,20 @@
                                           <a href="/about_me/">个人介绍</a>
                                   </li>
                          </ul>
-                        <form action="/blog/search" class="navbar-form navbar-right" role="search">
-                            
+                        <form action="{% url 'blog_search' %}" class="navbar-form navbar-right" role="search" method="post">
+                            {% csrf_token %}
                              <div class="form-group">
-                                <input type="text" class="form-control" placeholder="搜索博文">
+                                <input type="text" class="form-control" name="blog_search" placeholder="搜索博文">
                              </div>
         
-                             <button type="submit" class="btn btn-default">搜索</button>
+                             <input type="submit" class="btn btn-default" value="搜索"></input>
                         </form>
                         <ul id="user_part" class="nav navbar-nav navbar-right">  
                         </ul>
                  </div>
         </div>    
         
-        <div class="container">      
+        <div class="container" id="top">      
                 <div class="row">
                         <div class="col-md-9">
                                  {% block content %}{% endblock %}
@@ -64,6 +64,10 @@
                          </div>
                 </div>
         </div>
+	<div class="back_to_top">
+		<a href="#top" target="_self">返回顶部</a>
+		<a href="{%url 'blog_get_blogs' %}" target="_self">博客主页</a>
+	</div>
 </body>
 </html>
 

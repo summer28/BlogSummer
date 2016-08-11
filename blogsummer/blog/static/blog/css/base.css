@@ -21,3 +21,22 @@ body{
 	border-bottom-width: 2px;
 	border-bottom-color: #DDD;
 }
+ .back_to_top{
+ 	position:fixed;
+ 	right:40px;
+ 	bottom:50px;
+ 	z-index:100;
+ 	display:block;
+ }
+ .back_to_top a{
+  	display:block;
+	font-weight:bold;
+	font-size:14px;
+	color:##A0A0A0!important;
+	background-color:#F5F5F5;
+	width:120px;
+	text-align:center;
+	padding:4px;
+	text-decoration:none;
+	margin-bottom:10px;
+ }

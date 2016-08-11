@@ -125,3 +125,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+ADMINS = (
+    ('Chenchen','13770512913@163.com'),#设置管理员邮箱
+)
+
+#Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST= 'smtp.163.com'#QQ邮箱SMTP服务器
+EMAIL_PORT= 25		 #QQ邮箱SMTP服务端口
+EMAIL_HOST_USER = 'blogemail666@163.com'  #我的邮箱帐号
+EMAIL_HOST_PASSWORD = '1qaz2wsx' #码授权
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL =SERVER_EMAIL=EMAIL_HOST_USER
