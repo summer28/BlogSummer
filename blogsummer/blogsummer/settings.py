@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'django_comments',
     'django.contrib.sites',
+    'ckeditor',
+    'ckeditor_uploader',
 
 ]
 SITE_ID=1
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'blogsummer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'blog/templates').replace('\\','/'),],# in case of windows
+        'DIRS': [os.path.join(BASE_DIR,'templates').replace('\\','/'),],# in case of windows
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,13 +126,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIR=[os.path.join(BASE_DIR,'blogsummer/static/')]
 
+#ckeditor
+MEDIA_URL="/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+CKEDITOR_UPLOAD_PATH="ckeditorFiles/uploads/"
+#CKEDITOR_IMAGE_BACKEND=PIL
+CKEDITOR_IMAGE_BACKEND='pillow'
 
+#Email
 ADMINS = (
     ('Chenchen','13770512913@163.com'),#设置管理员邮箱
 )
 
-#Email
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.163.com'#QQ邮箱SMTP服务器
 EMAIL_PORT= 25		 #QQ邮箱SMTP服务端口

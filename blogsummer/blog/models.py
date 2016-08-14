@@ -17,14 +17,16 @@ class Tag(models.Model):
         return self.name
 
 
-
+from ckeditor_uploader.fields import RichTextUploadingField
+#from ckeditor.fields import RichTextField
 class Blog(models.Model):
-    title = models.CharField('标题', max_length=32)
-    author = models.CharField('作者', max_length=16)
-    content = models.TextField('正文')
-    created = models.DateTimeField('发布时间', auto_now_add=True)
-    category = models.ForeignKey(Category, verbose_name='分类')
-    tags = models.ManyToManyField(Tag, verbose_name='标签')
+    title = models.CharField(verbose_name='Title',max_length=32)
+    author = models.CharField(verbose_name='Author', max_length=16)
+    #content = RichTextField()
+    content=RichTextUploadingField('Content')
+    created = models.DateTimeField(verbose_name='Pub_Date', auto_now_add=True)
+    category = models.ForeignKey(Category, verbose_name='Category')
+    tags = models.ManyToManyField(Tag, verbose_name='Tags')
     # comment_set=models.ForeignKey(Comment,verbose_name='Comment') bidirectual relationship,don't need
     def __str__(self):
         return self.title

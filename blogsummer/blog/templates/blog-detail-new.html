@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "blog_base.html" %}
 {% block head %}
 {% load staticfiles %}
 
@@ -24,7 +24,7 @@
 
                  <div class="panel-body">
                           <div class="blog_content">
-                                  <p> {{ blog.content }}</p>
+                                  <p> {{ blog.content|safe }}</p>
                            </div>
                  </div>
         </div>

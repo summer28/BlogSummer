@@ -38,10 +38,10 @@ $('#reply_submit_btn').click(function() {
 
 //绑定回复按钮的鼠标经过事件
 
- $(".panel-body").on("mouseover", ".comment_content,li", function(event){
+ $(".comment_list").on("mouseover", ".comment_content,li", function(event){
     $(this).append("<span class='reply_button'> <a href='javascript:void(0);' onclick='reply_click(this);'>回复</a></span>");
 });   
-  $(".panel-body").on("mouseout", ".comment_content,li", function(event){
+  $(".comment_list").on("mouseout", ".comment_content,li", function(event){
     $(this).children(".reply_button").remove();
 });   
           // $(this).children(".reply_button").remove();

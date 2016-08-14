@@ -145,63 +145,58 @@ def post_comment(request, next=None, using=None):
         comment=comment,
         request=request
     )
-    
-    import os
-    pid=os.fork()
-    if pid>0:
-        return_data={
-            "user_name":comment.user_name ,
-            "submit_date":comment.submit_date.strftime('%Y-%m-%d %H:%M'),
-            "comment":comment.comment,
-            "reply_name": comment.reply_name ,
-            "root_id":comment.root_id ,
-            "reply_to":comment.reply_to ,
-            "comment_id":comment.id,
-            "result_info":"success"
-        }
-        return JsonResponse( return_data)
-    else: 
-        from . import email
-        try:
-            #判断评论对象是否为博文
-            if str(comment.content_type) == 'blog':
-                send_email = email.SendEmail()
-                #设置模版对应的参数
-                email_data = {
-                    'comment_name' : data["name"], 
-                    'comment_content' : comment.comment,
-                    'comment_url' : 'http://yshblog.com/blog/%s#F%s' % (comment.object_pk, comment.id)}
-                subject = ''    #邮件主题
-                template = ''   #使用的模版
-                to_list = []        #收件人
 
-                if int(comment.root_id) == 0:
-                    subject = u'[Chenchen的博客]博文评论'
-                    template = 'email/comment_email.html'
-                    #发送给自己（可以写其他邮箱）
-                    to_list.append(settings.DEFAULT_FROM_EMAIL)
-                else:
-                    subject = u'[Chenchen的博客]评论回复'
-                    template = 'email/reply_email.html'
-                    #获取评论对象，找到回复对应的评论
-                    comment_model = django_comments.get_model()
-                    cams = comment_model.objects.filter(id = comment.reply_to)
-                    if cams:
-                        to_list.append(cams[0].user_email)
+    from . import email
+    try:
+        #判断评论对象是否为博文
+        if str(comment.content_type) == 'blog':
+            send_email = email.SendEmail()
+            #设置模版对应的参数
+            email_data = {
+                'comment_name' : data["name"], 
+                'comment_content' : comment.comment,
+                'comment_url' : 'http://yshblog.com/blog/%s#F%s' % (comment.object_pk, comment.id)}
+            subject = ''    #邮件主题
+            template = ''   #使用的模版
+            to_list = []        #收件人
 
-                    else:
-                        #没有找到评论，就发给自己（可以修改其他邮箱）
-                        to_list.append(settings.DEFAULT_FROM_EMAIL)
-
-                #根据模版发送邮件
-                send_email.send_email_by_template(subject, template, email_data, to_list)
+            if int(comment.root_id) == 0:
+                subject = u'[Chenchen的博客]博文评论'
+                template = 'email/comment_email.html'
+                #发送给自己（可以写其他邮箱）
+                to_list.append(settings.DEFAULT_FROM_EMAIL)
             else:
-                #其他类型的评论暂不处理
-                pass
-        except Exception:
-            #ResponseJson方法是我前面自己加的，可以参考上一篇博文
-            return JsonResponse({"result_info":"comment with email fail"})
-     
+                subject = u'[Chenchen的博客]评论回复'
+                template = 'email/reply_email.html'
+                #获取评论对象，找到回复对应的评论
+                comment_model = django_comments.get_model()
+                cams = comment_model.objects.filter(id = comment.reply_to)
+                if cams:
+                    to_list.append(cams[0].user_email)
+
+                else:
+                    #没有找到评论，就发给自己（可以修改其他邮箱）
+                    to_list.append(settings.DEFAULT_FROM_EMAIL)
+
+            #根据模版发送邮件
+            send_email.send_email_by_template(subject, template, email_data, to_list)
+        else:
+            #其他类型的评论暂不处理
+            pass
+    except Exception:
+        #ResponseJson方法是我前面自己加的，可以参考上一篇博文
+        return JsonResponse({"result_info":"comment with email fail"})
+    return_data={
+        "user_name":comment.user_name ,
+        "submit_date":comment.submit_date.strftime('%Y-%m-%d %H:%M'),
+        "comment":comment.comment,
+        "reply_name": comment.reply_name ,
+        "root_id":comment.root_id ,
+        "reply_to":comment.reply_to ,
+        "comment_id":comment.id,
+        "result_info":"success"
+    }
+    return JsonResponse(return_data)
   
      #return next_redirect(request, fallback=next or 'comments-comment-done', c=comment._get_pk_val())
 

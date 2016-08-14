@@ -16,8 +16,14 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from django_comments import urls
+
+from django.views.static import serve
+from .settings import BASE_DIR
+import os
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/',include('blog.urls')),
     url(r'^blog/\d+/comments/',include('django_comments.urls')),
+    url(r'^ckeditor/',include('ckeditor_uploader.urls')),
+    url(r'^media/(?P<path>.*)$',serve,{'document_root':os.path.join(BASE_DIR,'media/')}),
 ]
