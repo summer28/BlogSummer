@@ -3,25 +3,28 @@
 {% load staticfiles %}
 
 	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/base.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'blog/css/get_blog.css' %}" />
 	
 {% endblock %}
 {% block content %}
 {% for blog in blogs %}
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="blog_header">
-			<a href= "{% url 'blog_get_detail' blog.id %}"><h2>{{ blog.title }}</h2></a> 
+<div class="blog_item">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="blog_header">
+				<a href= "{% url 'blog_get_detail' blog.id %}"><h3>{{ blog.title }}</h3></a> 
 
-			<span class="blog_created" >发布时间：{{ blog.created|date:"Y-m-d H:i" }}</span>
-			<span class="dc_sep">/</span></small>
-			<span class="blog_category" >{{ blog.category.name }}</span>
+				<span class="blog_created" >发布时间：{{ blog.created|date:"Y-m-d H:i" }}</span>
+				<span class="dc_sep">/</span></small>
+				<span class="blog_category" >{{ blog.category.name }}</span>
+			</div>
 		</div>
-	</div>
 
-	<div class="panel-body">
-	    <div class="blog_content">
-		    <p> {{ blog.content|truncatechars:200 |safe}}</p>
-	     </div>
+		<div class="panel-body">
+		    <div class="blog_content">
+			    <p> {{ blog.content|truncatechars:300 |safe}}</p>
+		     </div>
+		</div>
 	</div>
 </div>
 {% endfor %}

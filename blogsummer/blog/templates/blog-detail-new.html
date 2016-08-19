@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'blog/css/base.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'blog/css/detail.css' %}" />
-<script type="text/javascript" src ="{% static 'blog/js/comment_action.js' %}"></script>>
+<script type="text/javascript" src ="{% static 'blog/js/comment_action.js' %}"></script>
 <script type="text/javascript" src ="{% static 'blog/js/reply.js' %}"></script>
 <title>{{ blog.title }}</title>
 
@@ -97,34 +97,37 @@
                 </div>
              
                 <div class="panel-body" >
-                          {% get_comment_list for blog as comments %}
-                          <span id="comment_start"></span>
-                          {% for comment in comments %}
-                          <div class="blog_comment" name="F{{comment.id}}">
-                                  <p class="comment_title">
-                                      {{comment.submit_date|date:"Y-m-d H:i"}}  |  {{comment.user_name}} 评论
-                                  </p>
-                                  <p class="comment_content"
-                                     root='{{comment.id}}'
-                                     role='{{comment.id}}'
-                                     base='{{comment.user_name}}'>
-                                     {{ comment.comment }}
-                                  </p>
+                        <div class="comment_list">
+                                {% get_comment_list for blog as comments %}
+                               <span id="comment_start"></span>
+                               {% for comment in comments %}
+                               <div class="blog_comment" name="F{{comment.id}}">
+                                        <p class="comment_title">
+                                          {{comment.submit_date|date:"Y-m-d H:i"}}  |  {{comment.user_name}} 评论
+                                        </p>
+                                        <p class="comment_content"
+                                         root='{{comment.id}}'
+                                         role='{{comment.id}}'
+                                         base='{{comment.user_name}}'>
+                                         {{ comment.comment }}
+                                       </p>
+                                      
+                                        <ul class="comment_reply">
+                                      
+                                        {% for reply in comment.replies %}
+                                                <li root='{{reply.root_id}}'
+                                                  role='{{reply.id}}'
+                                                  base='{{reply.user_name}}'>
+                                                  {{reply.user_name}} 回复 {{reply.reply_name}} ({{ reply.submit_date|date:"Y-m-d H:i"}})：{{ reply.comment }}
+                                                </li>
+                                        {% endfor %}
+                                          <!-- <span id="reply_start"></span> -->
+                                        </ul>
+                               </div>
                                   
-                                  <ul class="comment_reply">
-                                  
-                                      {% for reply in comment.replies %}
-                                          <li root='{{reply.root_id}}'
-                                              role='{{reply.id}}'
-                                              base='{{reply.user_name}}'>
-                                              {{reply.user_name}} 回复 {{reply.reply_name}} ({{ reply.submit_date|date:"Y-m-d H:i"}})：{{ reply.comment }}
-                                          </li>
-                                      {% endfor %}
-                                      <!-- <span id="reply_start"></span> -->
-                                  </ul>
-                          </div>
-                              
-                          {% endfor %}
+                              {% endfor %}    
+                        </div>
+
                 </div>
         </div>
         <!-- {% get_comment_form for blog as blog_form %}  -->

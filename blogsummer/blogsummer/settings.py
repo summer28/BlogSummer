@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+0v-voz_l(me0hbehl%9jzx!@tgkh#r1d*68skbe1n%8-n7n(j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#DEBUG = True
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -127,13 +127,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIR=[os.path.join(BASE_DIR,'blogsummer/static/')]
-
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 #ckeditor
 MEDIA_URL="/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 CKEDITOR_UPLOAD_PATH="ckeditorFiles/uploads/"
 #CKEDITOR_IMAGE_BACKEND=PIL
 CKEDITOR_IMAGE_BACKEND='pillow'
+
+
+
 
 #Email
 ADMINS = (
