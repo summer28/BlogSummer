@@ -65,7 +65,7 @@
                                                                 {% for category in categories %}
                                                                 <li class="category_item">
                                                                         <a href="{% url 'blog_get_category' category.id %}" >
-                                                                                <h5> {{category.name}}</h5>
+                                                                                <h5> {{category.name}}  ( {{category.num}} )</h5>
                                                                          </a>
                                                                 </li>
                                                                 

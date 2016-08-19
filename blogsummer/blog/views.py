@@ -33,10 +33,16 @@ def get_detail(request, blog_id):
         blog = Blog.objects.get(id=blog_id)
     except Blog.DoesNotExist:
         raise Http404
-
+    categories=Category.objects.all()
+    # categories_dic={}
+    # for category in categories:
+    #     c_blog=category.blog_set.all()
+    #     c_blog_num=len(c_blog)
+    #     categories_dic[category]=c_blog_num
+    # #print( categories_dic)
     ctx ={
             'blog': blog,
-            'categories':Category.objects.all(),
+            'categories':categories,
             }
     return render(request, 'blog-detail-new.html', ctx)
     
