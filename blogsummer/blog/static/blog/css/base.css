@@ -1,5 +1,6 @@
 body{
 	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, sans-serif;
+	letter-spacing: 1px;
 }
 a{
 	color: #005059;
@@ -10,7 +11,12 @@ a{
  	padding-left: 0;
  }
 
-
+.navbar-brand{
+	font-size:20px;
+}
+.navbar-nav{
+	font-size: 18px;
+}
 .container{
 	font-size: 14px;
 	line-height: 2em;
@@ -23,14 +29,15 @@ a{
 #search-button{
 	display: table-cell;
 	height:38px;
-	width:17%;
+	width:20%;
+	text-align: center;
 }
 .input-group{
 	width:100%;
 	margin-bottom: 30px;
 }
 .input-group .form-control{
-	width:82%;
+	width:80%;
 	height:38px;
 }
 .tags .panel,.tags .panel-default{
@@ -43,8 +50,9 @@ a{
 
 
 .tags .panel-body{
-	padding-left: 25px;
+
 	border-style:none;
+	padding-left: 0;
 }
 /*#category_title{
 	text-align: center;
@@ -57,6 +65,13 @@ a{
 	margin-bottom: 30px;
 	padding-bottom: 10px;
 	font-size:20px;
+}
+.pagination li a {
+	color: #005059;
+}
+.pagination .active a {
+	background-color: #005059;
+	border-color: #005059;
 }
  .back_to_top{
  	position:fixed;
