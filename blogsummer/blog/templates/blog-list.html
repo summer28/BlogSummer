@@ -24,6 +24,7 @@
 		    <div class="blog_content">
 			    <p> {{ blog.content|truncatechars:300 |safe}}</p>
 		     </div>
+				<a class="continue" href="{%url 'blog_get_detail' blog.id % }" style="padding-top:15px font-size:16px">继续阅读>></a>
 		</div>
 	</div>
 </div>

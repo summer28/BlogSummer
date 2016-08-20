@@ -33,15 +33,16 @@ class Blog(models.Model):
     # when a blog was saves, the blog number in category should plus 1
 
     def save(self, *args, **kwargs):
-
-        self.category.num=self.category.num+1
+        #when modify ,it will add 1 too
+        #self.category.num=self.category.num+1
+        blog_list=self.category.blog_set.all()
+        self.category.num=len(blog_list)
         self.category.save()
         super(Blog, self).save(*args, **kwargs)
 
     def delete(self,*args,**kwargs):
         self.category.num=self.category.num-1
         self.category.save()
-
         super(Blog, self).delete(*args, **kwargs)
 
 
