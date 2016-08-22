@@ -31,7 +31,12 @@ ALLOWED_HOSTS = ["*","127.0.0.1","localhost"]
 
 # Application definition
 
+import djcelery
+djcelery.setup_loader()
+BROKER_URL='django://'
 INSTALLED_APPS = [
+    'djcelery',
+    'kombu.transport.django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

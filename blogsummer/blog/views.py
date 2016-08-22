@@ -54,7 +54,6 @@ def get_category(request, category_id):
         raise Http404
     cat_blogset=cat.blog_set.all().order_by('-created')
     blog_paginator=Paginator(cat_blogset,8)#show 8 blogs per page
-  
     page=request.GET.get('page')
     try:
         blogs=blog_paginator.page(page)
@@ -99,6 +98,12 @@ def blog_search(request):
     except Exception:
         raise Http404
     return render(request, 'blog-list.html', ctx)
+
+
+
+
+
+
 
 def email_test(request):
     from django.core.mail import send_mail #导入django发送邮件模块

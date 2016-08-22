@@ -32,11 +32,11 @@ class CommentPostBadRequest(http.HttpResponseBadRequest):
             self.content = render_to_string("comments/400-debug.html", {"why": why})
 
 
+
+
+import threading
 @csrf_protect
 @require_POST
-
-
-
 def post_comment(request, next=None, using=None):
     """
     Post a comment.
@@ -146,11 +146,10 @@ def post_comment(request, next=None, using=None):
         request=request
     )
 
-    from . import email
+    #from . import email
     try:
         #判断评论对象是否为博文
         if str(comment.content_type) == 'blog':
-            send_email = email.SendEmail()
             #设置模版对应的参数
             email_data = {
                 'comment_name' : data["name"], 
@@ -161,12 +160,12 @@ def post_comment(request, next=None, using=None):
             to_list = []        #收件人
 
             if int(comment.root_id) == 0:
-                subject = u'[Chenchen的博客]博文评论'
+                subject = '[Chenchen的博客]博文评论'
                 template = 'email/comment_email.html'
                 #发送给自己（可以写其他邮箱）
                 to_list.append(settings.DEFAULT_FROM_EMAIL)
             else:
-                subject = u'[Chenchen的博客]评论回复'
+                subject = '[Chenchen的博客]评论回复'
                 template = 'email/reply_email.html'
                 #获取评论对象，找到回复对应的评论
                 comment_model = django_comments.get_model()
@@ -179,12 +178,16 @@ def post_comment(request, next=None, using=None):
                     to_list.append(settings.DEFAULT_FROM_EMAIL)
 
             #根据模版发送邮件
-            send_email.send_email_by_template(subject, template, email_data, to_list)
+            print("mail thread creating")
+            mail_thread=threading.Thread(target=send_email,args=(subject, template, email_data, to_list))
+            print("mail thread created")
+            mail_thread.setDaemon(True)
+            print("daemon")
+            mail_thread.start()
         else:
             #其他类型的评论暂不处理
             pass
     except Exception:
-        #ResponseJson方法是我前面自己加的，可以参考上一篇博文
         return JsonResponse({"result_info":"comment with email fail"})
     return_data={
         "user_name":comment.user_name ,
@@ -205,3 +208,8 @@ comment_done = confirmation_view(
     template="comments/posted.html",
     doc="""Display a "comment was posted" success page."""
 )
+
+from .email import SendEmail
+def send_email(subject, template, email_data, to_list):
+    SendEmail.send_email_by_template(subject, template, email_data, to_list)
+
